@@ -4,25 +4,30 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.forms import AuthenticationForm
 
+
 def registerView(request):
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Your account has been created! You can now login.')
+            messages.success(
+                request, f'Your account has been created! You can now login.')
             return redirect('login')
     else:
+        if request.user.is_authenticated:
+            return redirect('Blog-Home')
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
+
 
 @login_required
 def profileView(request):
     if request.method == "POST":
         u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, 
-                        request.FILES, 
-                        instance=request.user.profile)
+        p_form = ProfileUpdateForm(request.POST,
+                                   request.FILES,
+                                   instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
@@ -34,5 +39,5 @@ def profileView(request):
     context = {
         'u_form': u_form,
         'p_form': p_form
-        }
+    }
     return render(request, 'users/profile.html', context)
