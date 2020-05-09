@@ -8,5 +8,4 @@ urlpatterns = [
     path('post/update/<int:pk>/', views.PostUpdateView.as_view(), name='Post-Update'),
     path('post/delete/<int:pk>/', views.PostDeleteView.as_view(), name='Post-Delete'),
     path('post/new/', views.PostCreateView.as_view(), name='Post-Create'),
-    path('about/', views.about, name='Blog-About'),
 ]
