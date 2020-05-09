@@ -12,11 +12,11 @@ Setup:
 
 1. Clone the repo, type in the following command in the root dir:
 
-   source env/bin/activate
+``` source env/bin/activate ```
 
 2. Change the working directory to src and run:
 
-   python manage.py runserver
+``` python manage.py runserver ```
 
 this runs the django's dev webserver on your machine and you can access the web app from the displayed url in your browser.
 
